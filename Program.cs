@@ -43,14 +43,15 @@ namespace Admix
                 });
 
             // Add CORS policy
-            builder.Services.AddCors(options =>
+            builder.Services.AddCors(opt =>
             {
-                options.AddPolicy("AllowReactApp",
-                    builder => builder
-                        .WithOrigins("http://localhost:3000")
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials());
+                opt.AddPolicy("ReactApp", builder =>
+                {
+                    builder.WithOrigins("http://localhost:3000")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+                });
             });
 
 
@@ -72,7 +73,7 @@ namespace Admix
             app.UseHttpsRedirection();
 
             // Use CORS policy
-            app.UseCors("AllowReactApp");
+            app.UseCors("ReactApp");
 
             app.UseAuthorization();
             app.UseAuthentication();
